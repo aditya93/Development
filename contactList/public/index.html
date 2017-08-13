@@ -1,0 +1,43 @@
+<html ng-app="myApp">
+<head>
+<script src="angular.min.js"></script>
+<script src="jquery-1.11.3.js"></script>
+<script src="bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+<title>Contact List</title>
+</head>
+<body>
+	<div class="container" ng-controller="AppCtrl">
+<h1>Contact List App</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Email</td>
+					<td>Phone No.</td>
+					<td>Action</td>
+					<td>&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type=text ng-model="contact.name"></td>
+					<td><input type=text ng-model="contact.email"></td>
+					<td><input type=text ng-model="contact.number"></td>
+					<td><button class="btn btn-primary" ng-click=addContact()>Add Contact</button></td>
+					<td><button class="btn btn-info" ng-click=update()>Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click=deselect()>Clear</button></td>
+					
+				</tr>
+				<tr ng-repeat="contact in contactList">
+					<td>{{contact.name}}</td>
+					<td>{{contact.email}}</td>
+					<td>{{contact.number}}</td>
+					<td><button class="btn btn-danger" ng-click="remove(contact._id)">Remove</button></td>
+					<td><button class="btn btn-warning" ng-click="edit(contact._id)">Edit</button></td>
+					</tr>
+			</tbody>
+		</table>
+</div>
+<script src="controllers/controller.js"></script>
+</body>
+</html>
