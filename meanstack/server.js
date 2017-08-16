@@ -4,6 +4,7 @@ var port = process.env.PORT || 8080;
 var morgan = require("morgan");
 var mongoose = require('mongoose');
 var User = require('./app/models/user');
+var TestData = require('./app/models/user');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -26,11 +27,16 @@ app.post('/users',function(req,res){
 	user.username = req.body.username;
 	user.password = req.body.password;
 	user.email = req.body.email;
-	user.save();
-	res.send("User Created!!");
-});
-app.get('/home',function(req, res){
-	res.send('Hello from HomE!!!');
+	user.save(function(err){
+		if(err){
+			res.send(err);
+		}
+		else{
+			res.send("User Created!!");
+		}
+	});
+
+	
 });
 
 app.get('/', function (req, res) {
