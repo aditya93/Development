@@ -3,14 +3,15 @@ var app = express();
 var port = process.env.PORT || 8080;
 var morgan = require("morgan");
 var mongoose = require('mongoose');
-var TestData = require('./app/models/user');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var appRoutes = require('./app/routes/api')(router);
+var path = require('path');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(express.static(__dirname + '/public'));
 app.use('/api',appRoutes);
 
 mongoose.connect('mongodb://localhost:27017/tutorial',function(err){
@@ -22,6 +23,10 @@ mongoose.connect('mongodb://localhost:27017/tutorial',function(err){
 	{
 		console.log('Connected');
 	}
+});
+
+app.get('*',function (req, res ){
+	res.sendFile(path.join(__dirname+'/public/views/index.html'));
 });
 
 app.get('/', function (req, res) {
