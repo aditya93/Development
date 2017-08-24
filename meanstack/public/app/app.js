@@ -1,3 +1,1 @@
-angular.module("userApp",[]).config(function(){
-	console.log("Testing the APP Angular is coming!!!");
-});
+angular.module("userApp",['appRoutes','userControllers','userServices','ngAnimate']);
