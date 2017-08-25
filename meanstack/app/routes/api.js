@@ -1,6 +1,9 @@
 var User = require('../models/user');
 
 module.exports = function(router){
+
+	//USER REGISETRATION ROUTE
+	//http://localhost:8080/api/users
 router.post('/users',function(req,res){
 	var user = new User();
 	user.username = req.body.username;
@@ -19,5 +22,25 @@ router.post('/users',function(req,res){
 	});
 	}	
 	});
+
+	//USER LOGIN ROUTE
+	//http://localhost:8080/api/authenticate
+router.post('/authenticate',function(req,res){
+	User.findOne({username:req.body.username}).select("email username password").exec(function(err,user)
+	{
+		if(err) throw err;
+
+		if(!user){
+			res.json({success:false, message:"Could not authenticate user!"});
+		}else if (user){
+			var validPassword=user.comparePassword(req.body.password);
+			if(!validPassword){
+				res.json({success:false,message:"Please enter a valid Password"});
+			}else {
+				res.json({success:true,message:"USER Authenticated!"});
+			}
+		}
+	});
+});
 		return router;
 }
