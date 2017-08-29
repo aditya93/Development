@@ -7,7 +7,7 @@ angular.module('userControllers',['userServices'])
 	 this.regUser = function(regData){
 	 	app.loading=true;
 	 	app.errorMsg=false;
-
+	 	console.log(regData);
 	 	User.create(app.regData).then(function(data){
 			if(data.data.success){
 				//Create success message
@@ -16,7 +16,7 @@ angular.module('userControllers',['userServices'])
 				//Redirect to homepage
 				$timeout(function(){
 					$location.path('/');
-				}, 1500);
+				}, 2000);
 			}else{
 				//Create error message
 				app.loading=false;

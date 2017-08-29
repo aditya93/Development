@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+var secret ="Secret";
 
 module.exports = function(router){
 
@@ -26,8 +28,8 @@ router.post('/users',function(req,res){
 	//USER LOGIN ROUTE
 	//http://localhost:8080/api/authenticate
 router.post('/authenticate',function(req,res){
-	User.findOne({username:req.body.username}).select("email username password").exec(function(err,user)
-	{
+	 User.findOne({username:req.body.username}).select("email username password").exec(function(err,user)
+	 {
 		if(err) throw err;
 
 		if(!user)
@@ -41,6 +43,7 @@ router.post('/authenticate',function(req,res){
 			if(!validPassword){
 				res.json({success:false,message:"Please enter a valid Password"});
 			}else {
+				//var token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'24h'})
 				res.json({success:true,message:"USER Authenticated!"});
 			}
 			} else {
