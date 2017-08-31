@@ -1,17 +1,20 @@
 angular.module('mainController',[])
 .controller('mainCtrl',function(Auth, $timeout, $location, $rootScope){
 	var app = this;
+	app.loadme=false;
 
 	$rootScope.$on('$routeChangeStart',function(){
 		if(Auth.isLoggedIn()){
-		console.log('SUCCESS LOGGED IN');
+		app.isLoggedIn=true;
 		Auth.getUser().then(function(data){
-			console.log(data.data.username);
 			app.username=data.data.username;
+			app.useremail=data.data.email;
+			app.loadme=true;
 		});
 	}else{
-		console.log('NOT LOGGED IN');
 		app.username="";
+		app.isLoggedIn=false;
+		app.loadme=true;
 	}
 
 	});
