@@ -43,8 +43,8 @@ router.post('/authenticate',function(req,res){
 			if(!validPassword){
 				res.json({success:false,message:"Please enter a valid Password"});
 			}else {
-				//var token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'24h'})
-				res.json({success:true,message:"USER Authenticated!"});
+				var token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'2h'})
+				res.json({success:true,message:"USER Authenticated!", token:token});
 			}
 			} else {
 				res.json({success:false,message:"Please enter the Password "+req.body.username});
@@ -54,5 +54,26 @@ router.post('/authenticate',function(req,res){
 		}
 	});
 });
+
+	router.use(function(req,res,next){
+		var token = req.body.token || req.body.query ||req.headers['x-access-token'];
+		if(token){
+			//verify then
+			jwt.verify(token,secret,function(err,decoded){
+				if(err)
+				{
+					res.json({success:false, message:"Token invalid"});
+				}else{
+					req.decoded=decoded;
+					next();
+				}
+			});
+		}else{
+			res.json({success:false,message:"No token provided"});
+		}
+	})
+	router.post('/me',function(req,res){
+		res.send(req.decoded);
+	})
 		return router;
 }

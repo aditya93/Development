@@ -52,6 +52,9 @@
             <a class="nav-link" href="/register">Register</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#" ng-click="main.logout()">Logout</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link disabled" href="#">Disabled</a>
           </li>
           <li class="nav-item dropdown">
@@ -61,6 +64,9 @@
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Hello {{main.username}}</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
