@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+</head>
+<div class="container">
+<h1>Wikipedia API Search</h1>
+<h4>FCC Frontend Development</h4>
+<a href="https://en.wikipedia.org/wiki/Special:Random" target="blank"><img class="image-thumbnail" src="http://www.clker.com/cliparts/r/2/Q/h/3/L/system-search-hi.png"></a>
+	<input class="form-control" id="searchTerm">
+	<button id="search" class="btn btn-primary">Submit</button>
+	<ul id="output">
+	</ul>
+</div>
+<script>
+	$(document).ready(function(){
+		$("#search").click(function(){
+			var searchTerm=$("#searchTerm").val();
+			var url ="https://en.wikipedia.org/w/api.php?action=opensearch&search="+searchTerm+"&format=json&callback=?";
+		
+
+	$.ajax({
+		type:"GET",
+		url:url,
+		async:false,dataType:"json",success:function(data){
+		// heading	console.log(data[1][0]);
+		// discription	console.log(data[2][0]);
+		// link	console.log(data[3][0]);
+		$('#output').html('');
+			for(var i=0;i<data[1].length;i++)
+			{
+				$('#output').prepend("<li><a href="+data[3][i]+">"+data[1][i]+"</a><p>"+data[2][i]+"</p></li>");
+			}
+		},error:function(errorMessage){
+			alert("Error!");
+		}
+	})
+	});
+	});
+</script>
+</html>
