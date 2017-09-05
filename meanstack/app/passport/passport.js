@@ -1,6 +1,10 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../models/user');
 var session = require('express-session');
+var jwt = require('jsonwebtoken');
+var secret ="Secret";
+
+
 
 module.exports=function(app, passport)
 {
@@ -10,6 +14,7 @@ module.exports=function(app, passport)
   app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true, cookie: { secure: false }}));
 
   passport.serializeUser(function(user, done) {
+    token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'2h'});
   done(null, user.id);
 });
 
@@ -26,16 +31,23 @@ passport.deserializeUser(function(id, done) {
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    // User.findOrCreate(..., function(err, user) {
-    //   if (err) { return done(err); }
-    //   done(null, user);
-    // });
-    done(null,profile);
+     User.findOne({email:profile._json.email}).select('username password email').exec(function(err,user){
+        if(err) done(err);
+        console.log(profile._json.email);
+        if(err && user !== null)
+        {
+          done(null , user);
+        }else{
+          done(err);
+        }
+     }); 
+    //done(null,profile);
   }
  ));
 
-	app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }));
+	app.get('/auth/facebook/callback',passport.authenticate('facebook', {failureRedirect: '/login' }),function(req,res){res.redirect('/facebook/'+ token);
+  });
+
 	app.get('/auth/facebook/',passport.authenticate('facebook',{scope:'email'}));
 	return passport;
 }
