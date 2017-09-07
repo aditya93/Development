@@ -27,10 +27,10 @@ var app=angular.module("appRoutes",['ngRoute'])
 	templateUrl:'app/views/pages/users/profile.html',
 	authenticated:true
 		})
-	// 	.when('/facebook/:token',{
-	// templateUrl:'app/views/pages/users/social/social.html',
-	// authenticated:false
-	// 	})
+		.when('/facebook/:token',{
+	templateUrl:'app/views/pages/users/social/social.html',
+	authenticated:false
+		})
 		.otherwise({ redirectTo:'/'});
  	$locationProvider.html5Mode({
   	enabled: true,
@@ -46,8 +46,8 @@ app.run(['$rootScope','Auth','$location',function($rootScope, Auth,$location){
 				$location.path('/');
 			}
 		}else if(next.$$route.authenticated==false){
-			if(!Auth.isLoggedIn()){
-				event.preventDefault();
+			if(Auth.isLoggedIn()){
+	  			event.preventDefault();
 				$location.path('/profile');
 			}
 		}
