@@ -17,16 +17,30 @@ router.post('/users',function(req,res){
 	}else{
 		user.save(function(err){
 		if(err){
-			if(err.errors.name){
-			res.json({ success:false,message:err.errors.name.message});
-				}else if(err.errors.email){
-					res.json({success:false,message:err.errors.email.message});
-				}else if(err.errors.username){
-					res.json({success:false,message:err.errors.username.message});
-				}else if(err.errors.password){
-					res.json({success:false,message:err.errors.password.message});
-				}
+			if(err.errors!=null){
+				if(err.errors.name){
+				res.json({ success:false,message:err.errors.name.message});
+					}else if(err.errors.email){
+						res.json({success:false,message:err.errors.email.message});
+					}else if(err.errors.username){
+						res.json({success:false,message:err.errors.username.message});
+					}else if(err.errors.password){
+						res.json({success:false,message:err.errors.password.message});
+					}else {
+						res.json({success:false,message:err});
+					}
+		}else if(err){
+			if(err.code==11000){
+				 if(err.errmsg[50]=="u"){
+				 	res.json({success:false,message:"Username already exits try something different."});
+				 }else if(err.errmsg[50]=="e"){
+				 	res.json({success:false,message:"Email already exists try something different"});
+				 }
+			}else{
+				 res.json({success:false,message:err});
+			}
 		}
+	}
 		else{
 			res.json({ success:true,message:"User Created!!"});
 		}

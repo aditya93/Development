@@ -10,7 +10,12 @@ var nameValidator = [
   validator: 'matches',
   arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20}))+$/,
   message:'Name must have atleast 3 characters, max 30, no special characters, must have space in between name.'
-})
+}),
+  validate({
+    validator:'isLength',
+    arguments:[3,30],
+    message:'Name should be between {ARGS[0]} to {ARGS[1]} characters'
+  })
 ];
 
 var emailValidator = [
@@ -21,19 +26,19 @@ var emailValidator = [
   validate({
     validator:'isLength',
     arguments:[3,25],
-    message:'Email should be between 3 to 25 characters'
+    message:'Email should be between {ARGS[0]} to {ARGS[1]} characters'
   })
 ];
 
 var usernameValidator = [
   validate({
   validator: 'isAlphanumeric',
-  message:'Enter a valid username '
+  message:'Username must contain letters and numbers only'
   }),
   validate({
     validator:'isLength',
     arguments:[3,25],
-    message:'Email should be between 3 to 25 characters'
+    message:'Username should be between {ARGS[0]} to {ARGS[1]} characters'
   })
 ];
 
@@ -42,7 +47,12 @@ var passwordValidator = [
   validator: 'matches',
   arguments: /^(?=.*?[a-z])(?=.*?[A-z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/,
   message:'Password needs to have atleast one lowercase, one uppercase, one number, one special character number, and must atleast 8 characters but no more than 35'
-})
+}),
+  validate({
+    validator:'isLength',
+    arguments:[8,35],
+    message:'Password should be between {ARGS[0]} to {ARGS[1]} characters'
+  })
 ];
 
 
