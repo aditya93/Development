@@ -10,7 +10,8 @@
 <input class="form-control" type=password name="password" placeholder="PASSWORD" ng-model="main.loginData.password"></input>
 <br>
 <button class="btn btn-primary" type=submit>Login</button>&nbsp
-<a href="/auth/facebook" target="_blank"><button type="button" class="btn btn-success">Facebook</button></a>
+<button type="button" class="btn btn-success" ng-click="main.facebook();">Facebook</button>&nbsp
+<button type="button" class="btn btn-warning" ng-click="main.twitter();">Twitter</button>
 </form>
 <br>
 <div class="jumbotron text-center" ng-show="main.loading">
@@ -24,4 +25,7 @@
 </div>
 <div class="row show-hide-message" ng-show="main.errorMsg">
 <div class="alert alert-danger">{{main.errorMsg}}</div>
+</div>
+<div class="row show-hide-message" ng-show="facebook.errorMsg">
+<div class="alert alert-danger">{{facebook.errorMsg}}</div>
 </div>

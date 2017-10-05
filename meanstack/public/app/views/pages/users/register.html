@@ -1,9 +1,19 @@
 <div class="page-header">
 <h1>USER REGISTERATION</h1>
 </div>
-<form ng-submit="register.regUser(regData);">
+<form name="regForm" ng-submit="register.regUser(regData);" novalidate>
+<div ng-class="{'has-success':(regForm.name.$valid && !regForm.name.$pristine),'has-danger':(!regForm.name.$valid && !regForm.name.$pristine) || (!regForm.name.$valid && regForm.$submitted)}">
 <label>Name:</label>
-<input class="form-control"type=text name="name" placeholder="NAME" ng-model="register.regData.name"></input>
+<input class="form-control" type=text name="name" placeholder="NAME" ng-model="register.regData.name" ng-pattern=
+"/^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20}))+$/"  ng-minlength="3" ng-maxlength="20" required></input>
+<p class="help- block" ng-show="(!regForm.name.$pristine && regForm.name.$error.required) || (regForm.$submitted && regForm.name.$error.required)">This field is required</p>
+<ul ng-show="(!regForm.name.$pristine && regForm.name.$error.pattern) || (regForm.$submitted && regForm.name.$error.minlength) || (regForm.name.$error.maxlength)" class="help-block">
+	<li>Must have a space in betweenfirst and last name.</li>
+	<li>Must not contain any special characters.</li>
+	<li>Must not contain any numbers.</li>
+	<li>Must be atleast 3 characters but no more than 20</li>
+</ul>
+</div>
 <br>
 <label>Email:</label>
 <input class="form-control"type=text name="email" placeholder="EMAIL" ng-model="register.regData.email"></input>
@@ -16,6 +26,13 @@
 <br>
 <button class="btn btn-primary" type=submit>Register</button>
 </form>
+<span><strong>Is the form new?</strong>{{ regForm.$pristine }}</span>
+<br>
+<span><strong>Does the form has error?</strong>{{ regForm.$error }}</span>
+<br>
+<span><strong>Is the form submitted?</strong>{{ regForm.$submitted }}</span>
+<br>
+<span><strong>Is the form valid?</strong>{{ regForm.$valid }}</span>
 <br>
 <div class="jumbotron text-center" ng-show="register.loading">
 <span class="glyphicon glyphicon-repeat spinner">

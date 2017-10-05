@@ -24,4 +24,15 @@ angular.module('userControllers',['userServices'])
 			}
 		});
 	};
+})
+
+.controller('facebookCtrl',function($routeParams, Auth, $location, $window){
+	
+	var app = this;
+	if($window.location.pathname == '/facebookerror'){
+		app.errorMsg='Facebook email not found in the database';
+	}else{
+	Auth.facebook($routeParams.token);
+	$location.path('/');
+	}
 });

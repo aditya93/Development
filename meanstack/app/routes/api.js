@@ -66,7 +66,7 @@ router.post('/authenticate',function(req,res){
 			if(!validPassword){
 				res.json({success:false,message:"Please enter a valid Password"});
 			}else {
-				var token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'2h'})
+				var token=jwt.sign({username:user.username,email:user.email}, secret, {expiresIn:'2h'});
 				res.json({success:true,message:"USER Authenticated!", token:token});
 			}
 			} else {
