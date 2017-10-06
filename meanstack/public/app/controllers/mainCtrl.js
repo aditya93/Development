@@ -28,9 +28,15 @@ angular.module('mainController',[])
 	}
 
 	this.twitter=function(){
-		console.log($window.location.host); 
-		console.log($window.location.protocol);
-		//$window.location = $window.location.protocol+'//' + $window.location.host+'/auth/twitter';
+		//console.log($window.location.host); localhost:8080
+		//console.log($window.location.protocol); http
+		$window.location = $window.location.protocol+'//' + $window.location.host+'/auth/twitter';
+	};
+
+	this.google=function(){
+		//console.log($window.location.host); localhost:8080
+		//console.log($window.location.protocol); http
+		$window.location = $window.location.protocol+'//' + $window.location.host+'/auth/google';
 	};
 
 	 this.doLogin = function(loginData){

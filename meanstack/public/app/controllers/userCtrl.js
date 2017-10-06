@@ -35,4 +35,26 @@ angular.module('userControllers',['userServices'])
 	Auth.facebook($routeParams.token);
 	$location.path('/');
 	}
+})
+
+.controller('twitterCtrl',function($routeParams, Auth, $location, $window){
+	
+	var app = this;
+	if($window.location.pathname == '/twittererror'){
+		app.errorMsg='Twitter email not found in the database';
+	}else{
+	Auth.twitter($routeParams.token);
+	$location.path('/');
+	}
+})
+
+.controller('googleCtrl',function($routeParams, Auth, $location, $window){
+	
+	var app = this;
+	if($window.location.pathname == '/googleerror'){
+		app.errorMsg='Google email not found in the database';
+	}else{
+	Auth.google($routeParams.token);
+	$location.path('/');
+	}
 });
