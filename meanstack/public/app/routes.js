@@ -20,8 +20,7 @@ var app=angular.module("appRoutes",['ngRoute'])
 
 		})
 		.when('/logout',{
-	templateUrl:'app/views/pages/users/logout.html',
-	authenticated:true
+	templateUrl:'app/views/pages/users/logout.html'
 		})
 		.when('/profile',{
 	templateUrl:'app/views/pages/users/profile.html',

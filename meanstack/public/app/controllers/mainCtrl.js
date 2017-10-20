@@ -65,7 +65,7 @@ angular.module('mainController',[])
 	this.logout=function(){
 		Auth.logout();
 		$location.path('/logout');
-		$timeout(function() {
+		$timeout(function(){
 			$location.path('/');
 		},2000);
 	};
