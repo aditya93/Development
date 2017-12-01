@@ -48,6 +48,33 @@ router.post('/users',function(req,res){
 	}	
 	});
 
+	
+router.post('/checkusername',function(req,res){
+	 User.findOne({username:req.body.username}).select("username").exec(function(err,user)
+	 {
+		if(err) throw err;
+
+		if(user){
+			res.json({success:false, message:"The username is already taken"});
+		}else{
+			res.json({success:true, message:"Valid user"});
+		}
+	});
+});
+
+router.post('/checkemail',function(req,res){
+	 User.findOne({email:req.body.email}).select("email").exec(function(err,user)
+	 {
+		if(err) throw err;
+
+		if(user){
+			res.json({success:false, message:"The email is already taken"});
+		}else{ 
+			res.json({success:true, message:"Valid email"});
+		}
+	});
+});
+
 	//USER LOGIN ROUTE
 	//http://localhost:8080/api/authenticate
 router.post('/authenticate',function(req,res){
