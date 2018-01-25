@@ -61,6 +61,8 @@ var UserSchema = new Schema({
    username: {type:String, lowercase:true, required:true, unique:true, validate:usernameValidator},
    password: {type:String, validate:passwordValidator},
    email: {type:String, lowercase:true, required:true, unique:true, validate:emailValidator }
+   active: {type:Boolean, required:true, default:false},
+   temporarytoken: {type:String, required:true}
  });
 
 
