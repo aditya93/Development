@@ -11,6 +11,8 @@ var cols;
 var rows;
 var w = 40;
 
+var totalBees = 10;
+
 
 function setup(){
 	createCanvas(401, 401);
@@ -24,6 +26,46 @@ function setup(){
 			grid[i][j] = new Cell(i, j, w);
 		}
 	}
+
+	//Pick totalBees
+
+	var options = [];
+	for(var i = 0; i < cols; i++){
+		for(var j = 0; j < rows; j++){
+			options.push([i,j]);
+		}
+	}
+
+	for(var n = 0; n<totalBees; n++)
+	{
+		var index = floor(random(options.length));
+		var choice = options[index];
+		var i = choice[0];
+		var j = choice[1];
+		//Deletes that spot so it's no longer an option
+		options.splice(index,1);
+		grid[i][j].bee = true;
+	}
+
+
+	for(var i=0; i<cols; i++)
+	{
+		for(var j=0; j<rows; j++)
+		{
+			grid[i][j].countBees();
+		}
+	}
+}
+
+function gameOver () {
+	for(var i=0; i<cols; i++)
+	{
+		for(var j=0; j<rows; j++)
+		{
+			grid[i][j].revealed=true;
+		}
+	}
+	//alert("GAME OVER");
 }
 
 function mousePressed(){
@@ -33,6 +75,10 @@ function mousePressed(){
 		{
 			if(grid[i][j].contains(mouseX,mouseY)){
 				grid[i][j].reveal();
+
+				if(grid[i][j].bee){
+					gameOver();
+				}
 			}
 		}
 	}
