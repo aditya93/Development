@@ -1,0 +1,28 @@
+<html>
+	<body>
+		<script type="text/javascript">
+		var sum=0;
+		var first=0;
+		var sec=1;
+		var s = 0;
+		var add = 0;
+		while(sum < 4000000)
+		{
+			console.log(sum);
+			if(sum%2!==0){
+				 var f = sum;
+
+				 add = Number(f) + Number(s);
+				// console.log("SUM "+add); 
+				console.log("TOTAL"+add);
+				s = add;
+				//alert(a);
+			}
+			sum=first+sec;
+			first = sec;
+			sec = sum;
+
+		}
+		</script>
+	</body>
+</html>
